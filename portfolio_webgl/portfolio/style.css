@@ -1,0 +1,60 @@
+body{
+  font-family: Carlito, sans-serif;
+  color: aliceblue;
+  overflow-x: hidden;
+}
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+main{
+  position: absolute;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+header{
+  font-family: Calibri, sans-serif;
+  grid-column: 2/span 9;
+  color: white;
+  padding-left: 2%;
+  background-color: #00004f;
+}
+
+section{
+  grid-column: 2/6;
+  line-height: 1.5;
+  background-color: darkslategray;
+  border-radius: 2px;
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-bottom: 2%;
+}
+
+#objectif{
+  margin-top: 2%;
+}
+
+blockquote{
+  margin: 0;
+  padding: 0;
+  grid-column: 2/span 6;
+  font-style: italic;
+}
+
+footer{
+  grid-column: 2/12;
+  text-align: center;
+  background-color: #00004FFF;
+  color: aliceblue;
+  margin-top: 2%;
+  padding: 1%;
+  margin-bottom: 2%;
+}
+
+.droite{
+  grid-column: 8/12;
+}
