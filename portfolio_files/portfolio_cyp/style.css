@@ -3,15 +3,25 @@ body{
   color: aliceblue;
   overflow-x: hidden;
 }
-canvas {
+#background {
   position: fixed;
   top: 0;
   left: 0;
 }
 
+#particule{
+  position: relative;
+  top: 270vh;
+  left: 42%;
+}
+
 main{
   position: absolute;
   width: 100vw;
+
+}
+
+#haut{
   display: grid;
   grid-template-columns: repeat(12, 1fr);
 }
@@ -57,4 +67,49 @@ footer{
 
 .droite{
   grid-column: 8/12;
+}
+
+section:hover{
+  background-color: #487777;
+}
+
+#realisation{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  column-gap: 5%;
+  background-color: transparent;
+}
+
+
+:is(#realisation) div{
+  background-color: darkslategray;
+  padding-left: 4%;
+  padding-right: 4%;
+  border-radius: 2px;
+}
+
+#place_part{
+  padding-bottom: 2%;
+}
+
+.reveal-left{
+  opacity:0;
+  transform: translateX(-40px);
+}
+
+.reveal_visibleleft{
+  opacity: 1;
+  transform: translateX(0);
+  transition: 1s cubic-bezier(0.5,0,0,1);
+}
+
+.reveal-right{
+  opacity:0;
+  transform: translateX(40px);
+}
+
+.reveal_visibleright{
+  opacity: 1;
+  transform: translateX(0);
+  transition: 1s cubic-bezier(0.5,0,0,1);
 }

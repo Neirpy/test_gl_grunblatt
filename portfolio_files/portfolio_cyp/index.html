@@ -9,95 +9,97 @@
   <body>
     <canvas id="background"></canvas>
     <main>
-      <header>
-        <h1>Portfolio Grunblatt Cyprien</h1>
-        <p>Etudiant en dernière année de MMI</p>
-      </header>
+      <diV id="haut">
+        <header>
+          <h1>Portfolio Grunblatt Cyprien</h1>
+          <p>Etudiant en dernière année de MMI</p>
+        </header>
 
-      <section id="objectif">
-        <h2>Objectif</h2>
-        <p>
-          Etudiant en dernière année d'un
-          DUT Métier du Multimédia et de
-          l'Internet à l'IUT Nancy
-          Charlemagne, je suis à la
-          recherche d'un stage
-        </p>
-        <p>
-          Je souhaite
-          approfondir mon expérience
-          professionnelle dans le domaine
-          du web. Je suis très motivé à
-          travailler et à vous apporter le
-          maximum.
-        </p>
-      </section>
+        <section id="objectif" class="reveal-left">
+          <h2>Objectif</h2>
+          <p>
+            Etudiant en dernière année d'un
+            DUT Métier du Multimédia et de
+            l'Internet à l'IUT Nancy
+            Charlemagne, je suis à la
+            recherche d'un stage
+          </p>
+          <p>
+            Je souhaite
+            approfondir mon expérience
+            professionnelle dans le domaine
+            du web. Je suis très motivé à
+            travailler et à vous apporter le
+            maximum.
+          </p>
+        </section>
 
-      <blockquote>
-        <p>Voyons mes compétences</p>
-      </blockquote>
+        <blockquote class="reveal-left">
+          <p>Voyons mes compétences</p>
+        </blockquote>
 
-      <section>
-        <h2>Pole de compétence</h2>
-        <h3>Scientifique : 60 %</h3>
-        <p>
-          J'aime la programmation et le développement. Je suis aussi passionné de physique,
-          plus spécifiquement de physique quantique et d'astrophysique.
-        </p>
-        <h3>Artistique : 40 %</h3>
-        <p>
-          J'ai aussi un pôle artistique avec des productions graphiques, audiovisuelles.
-          Je suis aussi intéressé par le théâtre que j'ai pratiqué pendant 12 ans.
-        </p>
-      </section>
+        <section class="reveal-left">
+          <h2>Pole de compétence</h2>
+          <h3>Scientifique : 60 %</h3>
+          <p>
+            J'aime la programmation et le développement. Je suis aussi passionné de physique,
+            plus spécifiquement de physique quantique et d'astrophysique.
+          </p>
+          <h3>Artistique : 40 %</h3>
+          <p>
+            J'ai aussi un pôle artistique avec des productions graphiques, audiovisuelles.
+            Je suis aussi intéressé par le théâtre que j'ai pratiqué pendant 12 ans.
+          </p>
+        </section>
 
-      <blockquote>
-        <p>Je suis passionné de développement web</p>
-      </blockquote>
+        <blockquote class="reveal-left">
+          <p>Je suis passionné de développement web</p>
+        </blockquote>
 
-      <section class="droite">
-        <h2>Mes compétences</h2>
-        <h3>Scientifiques :</h3>
-        <ol>
-          <li>HTML / CSS</li>
-          <li>JS / Jquery / Ajax</li>
-          <li>PHP / SQL </li>
-          <li>WebGL / Three.js</li>
-          <li>Wamp/Xampp, GitHub</li>
-        </ol>
-        <h3>Artistiques :</h3>
-        <ol>
-          <li>Blender, Unreal Engine, Unity</li>
-          <li>Suite Adobe</li>
-          <li>Set up de camera</li>
-          <li>Design de logo</li>
-        </ol>
-      </section>
+        <section class="droite reveal-right">
+          <h2>Mes compétences</h2>
+          <h3>Scientifiques :</h3>
+          <ol>
+            <li>HTML / CSS</li>
+            <li>JS / Jquery / Ajax</li>
+            <li>PHP / SQL </li>
+            <li>WebGL / Three.js</li>
+            <li>Wamp/Xampp, GitHub</li>
+          </ol>
+          <h3>Artistiques :</h3>
+          <ol>
+            <li>Blender, Unreal Engine, Unity</li>
+            <li>Suite Adobe</li>
+            <li>Set up de camera</li>
+            <li>Design de logo</li>
+          </ol>
+        </section>
 
-      <blockquote class="droite">
-        <p>J'ai aussi produit des travaux</p>
-      </blockquote>
-
-      <section class="droite">
-        <h2>Mes réalisations</h2>
+        <blockquote class="droite reveal-right">
+          <p>J'ai aussi produit des travaux</p>
+        </blockquote>
+      </diV>
+      <section id="realisation" class="reveal-left">
+        <h2>Mes réalisations :</h2>
         <div>
-          <h3>Informatique</h3>
+          <h3>Informatique :</h3>
           <p>Site web de la MDL :</p>
           <iframe src="img/mdl_ex.mp4"></iframe>
           <p>Entrainement Web_gl :</p>
-          <iframe src="img/particule.mp4"></iframe>
+          <div id="place_part">
+            <canvas id="particule"></canvas>
+          </div>
         </div>
         <div>
-          <h3>Infographie</h3>
+          <h3>Infographie :</h3>
           <p>Portrait en triangulation :</p>
           <div id="triangulation">
             <img src="img/portrait.png" alt="triangulation" width="30%" height="50%">
             <img src="img/portrait_sans_fond.png" alt="triangulation" width="30%" height="50%">
             <img src="img/biche_triangulation_grunblatt.png" alt="triangulation" width="30%" height="50%">
           </div>
-          <p>Blender</p>
+          <p>Blender :</p>
           <iframe src="img/blender_gl.mp4"></iframe>
-
         </div>
           
       </section>

@@ -1,21 +1,36 @@
 import './style.css'
 import {
-    AmbientLight, BoxGeometry, GridHelper, MathUtils,
+    AmbientLight,
+    AxesHelper,
+    BoxGeometry,
+    BufferGeometry, Clock,
+    Color,
+    DirectionalLight,
+    Float32BufferAttribute,
+    GridHelper, Group, Line, LineBasicMaterial,
+    MathUtils,
     Mesh,
     MeshBasicMaterial,
+    MeshPhongMaterial,
     MeshStandardMaterial,
-    PerspectiveCamera, PointLight, PointLightHelper,
-    Scene, SphereGeometry, TextureLoader,
-    TorusGeometry,
-    WebGLRenderer
+    PerspectiveCamera,
+    PointLight,
+    PointLightHelper, Points, PointsMaterial,
+    Scene,
+    SphereGeometry,
+    TextureLoader,
+    TorusGeometry, VertexColors,
+    WebGLRenderer,
+    WebGLRenderTarget
 } from "three";
-
+import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 
 
 //Setup
 
 const scene=new Scene();
+
 
 const camera = new PerspectiveCamera(
     75,
@@ -26,6 +41,7 @@ const camera = new PerspectiveCamera(
 
 const renderer = new WebGLRenderer({
     canvas:document.querySelector('#background'),
+    antialias:true,
 });
 
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -36,16 +52,30 @@ camera.position.setX(-3);
 renderer.render(scene,camera);
 
 
+
 // Torus
 
-const geometry= new TorusGeometry(10,3,16,100);
+const geometry= new TorusGeometry(10,1,8,100);
 const material= new MeshStandardMaterial({
     color: 0xEE82EE,
     wireframe:true,
 });
 const torus= new Mesh(geometry,material);
 
-scene.add(torus);
+const materialTor2= new MeshStandardMaterial({
+    color: 0xFF0092,
+    wireframe:true,
+});
+const torus2= new Mesh(geometry,materialTor2);
+
+const materialTor3= new MeshStandardMaterial({
+    color: 0xFFAA92,
+    wireframe:true,
+});
+const torus3= new Mesh(geometry,materialTor3);
+torus3.rotateX(1.5);
+
+scene.add(torus, torus2, torus3);
 
 
 // Lumière
@@ -54,7 +84,8 @@ const pointLight=new PointLight(0xffffff);
 pointLight.position.set(5,5,5);
 
 const ambientLight= new AmbientLight(0xffffff);
-scene.add(pointLight,ambientLight)
+scene.add(pointLight,ambientLight);
+
 
 
 //const lightHelper= new PointLightHelper(pointLight);
@@ -116,6 +147,32 @@ terre.position.z=30;
 terre.position.setX(-10);
 scene.add(terre);
 
+// Saturne
+
+const saturTexture= new TextureLoader().load('img/8k_saturn.jpg');
+
+const saturne = new Mesh(
+    new SphereGeometry(5, 40, 40),
+    new MeshStandardMaterial({
+        map:saturTexture,
+    })
+);
+
+const ringSat=new TorusGeometry(8,2,2,50);
+const matRing = new MeshStandardMaterial({
+    map: saturTexture,
+});
+const anneauSat=new Mesh(ringSat, matRing);
+
+
+saturne.position.z=50;
+saturne.position.setX(-15);
+anneauSat.position.z=50;
+anneauSat.position.setX(-15);
+anneauSat.rotation.x=2;
+scene.add(saturne,anneauSat);
+
+
 function moveCamera(){
     const t = document.body.getBoundingClientRect().top;
 
@@ -131,15 +188,157 @@ function moveCamera(){
 document.body.onscroll=moveCamera;
 moveCamera();
 
+//particule
+
+const textureLoader= new TextureLoader();
+const circleTexture=textureLoader.load('img/circle.png');
+const alphaMap=textureLoader.load('img/alphamap.png');
+
+const scene2=new Scene();
+const count=100;
+const distance=3;
+const size=0.1;
+
+scene2.add(new AxesHelper());
+
+const camera2 = new PerspectiveCamera(
+    75,
+    window.innerWidth/window.innerHeight,
+    0.1,
+    1000
+);
+camera2.position.z=-4;
+camera2.position.y=0.5;
+camera2.position.x=0.5;
+scene2.add(camera2);
+scene.add(pointLight.clone(),ambientLight.clone());
+
+const points= new Float32Array(count *3);
+const colors= new Float32Array(count *3);
+for (let i = 0; i <points.length; i++) {
+    points[i]=MathUtils.randFloatSpread(distance*2);
+    colors[i]=Math.random()*0.5 + 0.5;
+}
+
+const geoPart=new BufferGeometry();
+geoPart.setAttribute('position',new Float32BufferAttribute(points,3));
+geoPart.setAttribute('color',new Float32BufferAttribute(colors,3));
+const pointMaterial= new PointsMaterial({
+    size,
+    vertexColors:VertexColors,
+    alphaTest:0.5,
+    alphaMap:alphaMap,
+    transparent: true
+});
+const pointsObject= new Points(geoPart, pointMaterial);
+const group= new Group(pointsObject);
+group.add(pointsObject);
+
+const lineMaterial= new LineBasicMaterial({
+    color:0xd4d4d4,
+    opacity:0.1,
+    depthWrite:false,
+})
+const lineObject=new Line(geoPart,lineMaterial);
+group.add(lineObject);
+
+scene2.add(group);
+
+const renderer2=new WebGLRenderer({
+    canvas:document.querySelector("#particule"),
+    antialias:true,
+    alpha:true
+});
+renderer2.setClearColor(0x000000,0);
+document.body.appendChild(renderer2.domElement);
+
+const controls= new OrbitControls(camera2, renderer2.domElement);
+const clock= new Clock();
+
+let mouseX=0;
+let mouseY=0
+window.addEventListener('mousemove',function (e){
+    mouseX=e.clientX;
+    mouseY=e.clientY;
+});
+
+
+renderer2.render(scene2,camera2);
+
+
 function tick(){
+
+
     requestAnimationFrame(tick);
     torus.rotation.x +=0.01;
     torus.rotation.y +=0.005;
     torus.rotation.z +=0.01;
 
+    torus2.rotation.x +=0.005;
+    torus2.rotation.y +=0.01;
+    torus2.rotation.z +=0.01;
+
+    torus3.rotation.x -=0.01;
+    torus3.rotation.y -=0.01;
+    torus3.rotation.z -=0.005;
+
     terre.rotation.y +=0.01;
+    saturne.rotation.y +=0.01;
+    anneauSat.rotation.z -=0.01;
 
     renderer.render(scene,camera);
+
+    const time=clock.getElapsedTime();
+    renderer2.render(scene2,camera2);
+    controls.update();
+    const ratiox=(mouseX/window.innerWidth -0.5) *2;
+    const ratioy=(mouseY/window.innerHeight -0.5) *2;
+    group.rotation.x=ratioy*Math.PI*0.1;
+    group.rotation.y=ratiox*Math.PI*0.1;
     //controls.update();
+
 }
 tick();
+
+window.addEventListener('resize',function (){
+    camera.aspect=window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth,window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+});
+
+
+// Scroll
+
+const ratio=0.35;
+const options={
+    root:null,
+    rootMargin:'0px',
+    threshold: ratio
+}
+
+const handleInterLeft=function (entries, observer){
+    entries.forEach(function (entry){
+        if (entry.intersectionRatio > ratio){
+            entry.target.classList.add('reveal_visibleleft');
+            observer.unobserve(entry.target);
+        }
+    });
+}
+const handleInterRight=function (entries, observer){
+    entries.forEach(function (entry){
+        if (entry.intersectionRatio > ratio){
+            entry.target.classList.add('reveal_visibleright');
+            observer.unobserve(entry.target);
+        }
+    });
+}
+
+const observerLeft = new IntersectionObserver(handleInterLeft,options);
+document.querySelectorAll(".reveal-left").forEach(function (r){
+    observerLeft.observe(r);
+});
+const observerRight = new IntersectionObserver(handleInterRight,options);
+document.querySelectorAll(".reveal-right").forEach(function (r){
+    observerRight.observe(r);
+});
