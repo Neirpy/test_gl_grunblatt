@@ -9,16 +9,10 @@ body{
   left: 0;
 }
 
-#particule{
-  position: relative;
-  top: 270vh;
-  left: 42%;
-}
 
 main{
   position: absolute;
   width: 100vw;
-
 }
 
 #haut{
@@ -69,27 +63,51 @@ footer{
   grid-column: 8/12;
 }
 
+#competence{
+  margin-top: 15%;
+}
+
 section:hover{
   background-color: #487777;
 }
 
 #realisation{
   display: grid;
-  grid-template-columns: repeat(3,1fr);
+  grid-template-columns: 7% 30% 20% 25%;
   column-gap: 5%;
   background-color: transparent;
+  margin-top: 1%;
 }
 
+#realisation h2{
+  grid-column-start: 2;
+}
 
 :is(#realisation) div{
   background-color: darkslategray;
   padding-left: 4%;
-  padding-right: 4%;
+  padding-right: 0;
   border-radius: 2px;
 }
 
-#place_part{
-  padding-bottom: 2%;
+:is(#realisation) div:hover{
+  background-color: #487777;
+}
+@media screen and (max-width:1280px) {
+  #realisation{
+    display: grid;
+    grid-template-columns:repeat(3,1fr);
+    column-gap: 5%;
+    background-color: transparent;
+  }
+
+  #realisation h2{
+    grid-column-start: 1;
+  }
+
+  #competence{
+    margin-top: 0;
+  }
 }
 
 .reveal-left{

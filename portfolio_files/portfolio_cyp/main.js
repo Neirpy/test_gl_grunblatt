@@ -211,7 +211,6 @@ camera2.position.z=-4;
 camera2.position.y=0.5;
 camera2.position.x=0.5;
 scene2.add(camera2);
-scene.add(pointLight.clone(),ambientLight.clone());
 
 const points= new Float32Array(count *3);
 const colors= new Float32Array(count *3);
@@ -250,13 +249,11 @@ const renderer2=new WebGLRenderer({
     alpha:true
 });
 renderer2.setClearColor(0x000000,0);
-document.body.appendChild(renderer2.domElement);
-
 const controls= new OrbitControls(camera2, renderer2.domElement);
 const clock= new Clock();
 
 let mouseX=0;
-let mouseY=0
+let mouseY=0;
 window.addEventListener('mousemove',function (e){
     mouseX=e.clientX;
     mouseY=e.clientY;
@@ -265,6 +262,35 @@ window.addEventListener('mousemove',function (e){
 
 renderer2.render(scene2,camera2);
 
+// Blender
+
+const scene3 = new Scene();
+const camera3 = new PerspectiveCamera(
+    75,
+    window.innerWidth/window.innerHeight,
+    0.1,
+    1000
+);
+camera3.position.z=70;
+camera3.position.y=5;
+scene3.add(camera3);
+scene3.add(pointLight.clone(),ambientLight.clone());
+
+const renderer3=new WebGLRenderer({
+    canvas:document.querySelector("#blender"),
+    antialias:true,
+    alpha:true
+});
+
+const controls2= new OrbitControls(camera3, renderer3.domElement);
+
+
+const loader = new GLTFLoader();
+loader.load('img/projet_grunblatt.glb',function (gltf){
+    scene3.add(gltf.scene);
+});
+
+renderer3.render(scene3,camera3);
 
 function tick(){
 
@@ -295,7 +321,9 @@ function tick(){
     const ratioy=(mouseY/window.innerHeight -0.5) *2;
     group.rotation.x=ratioy*Math.PI*0.1;
     group.rotation.y=ratiox*Math.PI*0.1;
-    //controls.update();
+    controls2.update();
+
+    renderer3.render(scene3,camera3);
 
 }
 tick();
